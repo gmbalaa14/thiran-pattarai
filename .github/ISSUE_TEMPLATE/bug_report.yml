@@ -1,0 +1,91 @@
+name: Bug report
+description: A skill misbehaves, a plugin fails to install, or the docs site is broken.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. Please check the [docs](https://gmbalaa14.github.io/thiran-pattarai/) first, and search existing issues to avoid duplicates.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where is the problem?
+      options:
+        - A skill in the thiran plugin
+        - Installing the marketplace or a plugin
+        - Documentation site
+        - Validation script or CI
+        - Something else
+    validations:
+      required: true
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Which skill?
+      description: Only if the problem is with a specific skill.
+      options:
+        - Not applicable
+        - /thiran:plan-with-me
+        - /thiran:commit-msg
+        - /thiran:safe-rebase
+        - /thiran:pr-triage
+        - /thiran:pr-judge
+        - Other
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The exact commands or prompts you ran, in order.
+      placeholder: |
+        1. /plugin marketplace add gmbalaa14/thiran-pattarai
+        2. /plugin install thiran@pattarai
+        3. /thiran:...
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: Paste any error messages or output. Remove tokens, URLs with secrets, and private code first.
+      render: text
+    validations:
+      required: false
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      description: The version shown in `/plugin`, or in `plugin.json`.
+      placeholder: "1.0.0"
+    validations:
+      required: false
+  - type: input
+    id: claude-code-version
+    attributes:
+      label: Claude Code version
+      description: Run `claude --version`.
+    validations:
+      required: false
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15, Ubuntu 24.04, Windows 11 (WSL)
+    validations:
+      required: false
+  - type: checkboxes
+    id: conduct
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/gmbalaa14/thiran-pattarai/blob/main/CODE_OF_CONDUCT.md).
+          required: true

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation site
+    url: https://gmbalaa14.github.io/thiran-pattarai/
+    about: Install steps, skill guides and the contributor guide.
+  - name: Report a Code of Conduct concern
+    url: https://github.com/gmbalaa14/thiran-pattarai/blob/main/CODE_OF_CONDUCT.md#enforcement
+    about: Conduct reports are handled privately. See the Enforcement section for how to reach the maintainer.
