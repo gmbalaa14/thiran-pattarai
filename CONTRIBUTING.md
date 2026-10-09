@@ -13,6 +13,7 @@ Thank you for contributing! This guide covers how to add a skill, add a plugin, 
 - [Releasing a change](#releasing-a-change)
 - [Submitting a PR](#submitting-a-pr)
 - [PR checklist](#pr-checklist)
+- [Reporting issues](#reporting-issues)
 - [Code of Conduct](#code-of-conduct)
 
 ---
@@ -122,23 +123,30 @@ Bump `version` for the plugin in both its `plugin.json` and its marketplace entr
 2. Create a branch: `git checkout -b add-<skill-or-plugin-name>`
 3. Make your change, following the sections above.
 4. Run the checks in [Validate your change](#validate-your-change).
-5. Open a pull request against `main` and copy in the checklist below.
+5. Open a pull request against `main`. The [pull request template](.github/PULL_REQUEST_TEMPLATE.md) fills in automatically; tick every item that applies and delete the ones that do not.
 
 ---
 
 ## PR checklist
 
-```
-- [ ] Skill folder name is lowercase-hyphenated and matches `name` in SKILL.md
-- [ ] SKILL.md has frontmatter with name and description
-- [ ] SKILL.md is saved with LF line endings
-- [ ] No hard-coded ~/.claude/skills paths (use ${CLAUDE_SKILL_DIR})
-- [ ] New plugin: added to .claude-plugin/marketplace.json with matching name and version
-- [ ] Changed plugin: version bumped in plugin.json and marketplace.json
-- [ ] python3 scripts/validate.py passes
-- [ ] Docs build passes (cd docs && npm run build)
-- [ ] Docs pages updated if CONTRIBUTING.md or CODE_OF_CONDUCT.md changed
-```
+The pull request template covers four groups of checks:
+
+- **Skills:** folder name matches `name` in `SKILL.md`, frontmatter is present, LF line endings, and no hard-coded `~/.claude/skills` paths.
+- **Plugins and versioning:** new plugins are in `marketplace.json` with matching name and version, and changed plugins have their version bumped in both manifests.
+- **Documentation:** new hand-written pages are in `nav.ts`, and the repo and docs-site copies of `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` change together.
+- **Testing:** `python3 scripts/validate.py` and the docs build pass, and the skill has been tried in Claude Code.
+
+---
+
+## Reporting issues
+
+Use the [issue templates](https://github.com/gmbalaa14/thiran-pattarai/issues/new/choose):
+
+- **Bug report:** a skill misbehaves, a plugin fails to install, or the site is broken.
+- **Skill or plugin request:** a new skill, a new plugin, or an improvement to an existing skill.
+- **Documentation issue:** something on the site or in a README is unclear, wrong or missing.
+
+Blank issues are turned off so every report has the details needed to act on it. Report Code of Conduct concerns privately, as described in [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md#enforcement).
 
 ---
 

@@ -1,0 +1,39 @@
+name: Documentation issue
+description: Something on the docs site or in a README is unclear, wrong or missing.
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page or file
+      description: A link to the docs page, or the path of the file in the repository.
+      placeholder: https://gmbalaa14.github.io/thiran-pattarai/getting-started/
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem is it?
+      options:
+        - Incorrect or out of date
+        - Unclear or confusing
+        - Missing information
+        - Broken link or layout
+        - Typo
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What should change?
+      description: Describe the problem and, if you can, suggest the wording you would expect.
+    validations:
+      required: true
+  - type: checkboxes
+    id: conduct
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/gmbalaa14/thiran-pattarai/blob/main/CODE_OF_CONDUCT.md).
+          required: true
