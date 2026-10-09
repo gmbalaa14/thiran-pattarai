@@ -1,0 +1,139 @@
+/* Tokens follow design.md ("Claude Minimal Editorial"); dark values are the same palette inverted. */
+:root {
+  --primary: #141413;
+  --secondary: #30302e;
+  --accent: #d97757;
+  --bg: #faf9f5;
+  --surface: #ffffff;
+  --text: #141413;
+  --text-soft: #30302e;
+  --text-mute: #5f5e58;
+  --border: #d1cfc5;
+  --accent-border: #d9775733;
+  --track: #f0eee6;
+  --code-bg: #f4f2ea;
+  --error: #b42318;
+  --shadow: 0 1px 2px rgb(20 20 19 / 0.04), 0 4px 16px rgb(20 20 19 / 0.04);
+
+  --serif: 'Newsreader', 'Noto Sans Tamil', 'Anthropic Serif', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', 'Noto Sans Tamil', 'Anthropic Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+  --r-sm: 4px; --r-md: 10px; --r-lg: 16px; --r-xl: 24px;
+  --nav-h: 64px;
+  --logo-tile: #141413; --logo-border: transparent;
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  --primary: #faf9f5;
+  --secondary: #e8e6dc;
+  --bg: #141413;
+  --surface: #1e1d1b;
+  --text: #faf9f5;
+  --text-soft: #d8d6cc;
+  --text-mute: #a3a198;
+  --border: #3a3935;
+  --accent-border: #d9775744;
+  --track: #232220;
+  --code-bg: #1a1918;
+  --error: #f97066;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 16px rgb(0 0 0 / 0.25);
+  --logo-tile: #1e1d1b; --logo-border: #3a3935;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 24px); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 17px/25px var(--sans); font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .2s, color .2s;
+}
+a { color: inherit; }
+img, svg { max-width: 100%; }
+::selection { background: var(--accent-border); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
+
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 330; letter-spacing: 0; margin: 0; color: var(--text); }
+h1 { font-size: clamp(40px, 6vw, 54px); line-height: 1.15; }
+h2 { font-size: clamp(30px, 4vw, 41px); line-height: 1.2; }
+h3 { font-family: var(--sans); font-weight: 330; font-size: 31px; line-height: 37px; }
+.display { font-size: clamp(44px, 7vw, 72px); line-height: 1.1; }
+
+.wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+@media (max-width: 640px) { .wrap { padding: 0 16px; } }
+
+/* ── Buttons ───────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 44px; padding: 0 20px; border-radius: var(--r-md);
+  font: 600 17px/1.2 var(--sans); text-decoration: none; cursor: pointer;
+  border: 1px solid transparent; transition: background-color .15s, border-color .15s, color .15s;
+}
+.btn-solid { background: var(--primary); color: var(--bg); }
+.btn-solid:hover { background: var(--secondary); }
+.btn-outline { background: var(--bg); color: var(--text); border-color: var(--border); }
+.btn-outline:hover { background: var(--surface); border-color: var(--text-mute); }
+.link { color: var(--text-soft); text-decoration: none; }
+.link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── Nav ───────────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 50; height: var(--nav-h);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(6px); border-bottom: 1px solid var(--border);
+}
+.topbar .wrap { display: flex; align-items: center; height: 100%; gap: 32px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 400 20px/1 var(--serif); }
+.logo-tile { fill: var(--logo-tile); stroke: var(--logo-border); stroke-width: 2; }
+.topnav { display: flex; gap: 24px; margin-left: 8px; }
+.topnav a { font-size: 16px; color: var(--text-soft); text-decoration: none; }
+.topnav a:hover, .topnav a[aria-current='page'] { color: var(--text); }
+.top-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  display: inline-grid; place-items: center; width: 40px; height: 40px; cursor: pointer;
+  background: transparent; color: var(--text-soft); border: 1px solid transparent; border-radius: var(--r-md);
+}
+.icon-btn:hover { border-color: var(--border); background: var(--surface); color: var(--text); }
+.theme-toggle .sun { display: none; }
+:root[data-theme='dark'] .theme-toggle .sun { display: block; }
+:root[data-theme='dark'] .theme-toggle .moon { display: none; }
+.menu-btn { display: none; }
+@media (max-width: 860px) { .topnav { display: none; } .menu-btn { display: inline-grid; } }
+
+/* ── Cards / chips ─────────────────────────── */
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl);
+  padding: 32px; box-shadow: var(--shadow);
+}
+a.card { display: block; text-decoration: none; transition: border-color .15s; }
+a.card:hover { border-color: var(--accent); }
+.chip {
+  display: inline-block; padding: 4px 12px; border-radius: 9999px; background: var(--track);
+  color: var(--text-soft); font: 600 12px/1.4 var(--sans); border: 1px solid var(--border);
+}
+.chip-accent { border-color: var(--accent-border); color: var(--accent); background: transparent; }
+.eyebrow { font: 600 12px/1.2 var(--sans); color: var(--accent); }
+
+/* ── Code ──────────────────────────────────── */
+code { font-family: var(--mono); font-size: 0.88em; background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 1px 6px; }
+pre { font-family: var(--mono); font-size: 14px; line-height: 1.6; background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px 20px; overflow-x: auto; margin: 0; }
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.astro-code, .astro-code span { color: var(--shiki-light); }
+:root[data-theme='dark'] .astro-code, :root[data-theme='dark'] .astro-code span { color: var(--shiki-dark); }
+.astro-code { background: var(--code-bg) !important; }
+.copyblock { position: relative; }
+.copyblock pre { padding-right: 84px; }
+.copy-btn {
+  position: absolute; top: 10px; right: 10px; height: 30px; padding: 0 12px; cursor: pointer;
+  font: 600 12px/1 var(--sans); color: var(--text-soft); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+}
+.copy-btn:hover { border-color: var(--text-mute); color: var(--text); }
+.prompt { color: var(--text-mute); user-select: none; }
+
+/* ── Footer ────────────────────────────────── */
+.footer { border-top: 1px solid var(--border); margin-top: 104px; padding: 40px 0; color: var(--text-mute); font-size: 15px; line-height: 22px; }
+.footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 32px; justify-content: space-between; }
+.footer a { color: var(--text-soft); }

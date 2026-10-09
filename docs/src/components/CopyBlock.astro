@@ -1,0 +1,8 @@
+---
+const { lines = [], label = 'Copy' } = Astro.props;
+const text = lines.join('\n');
+---
+<div class="copyblock">
+  <pre><code>{lines.map((l, i) => (<><span class="prompt">$ </span>{l}{i < lines.length - 1 ? '\n' : ''}</>))}</code></pre>
+  <button class="copy-btn" type="button" data-copy={text}>{label}</button>
+</div>

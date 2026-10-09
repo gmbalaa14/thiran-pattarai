@@ -1,0 +1,23 @@
+---
+import Doc from '../../layouts/Doc.astro';
+import { plugins } from '../../data/registry';
+import { SITE } from '../../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Doc title="Plugins" description="Every plugin in the pattarai marketplace.">
+  <h1>Plugins</h1>
+  <p class="lede">The <code>{SITE.marketplace}</code> marketplace groups skills into plugins. Install only what you need.</p>
+  <table>
+    <thead><tr><th>Plugin</th><th>Skills</th><th>What it is for</th></tr></thead>
+    <tbody>
+      {plugins.map((p) => (
+        <tr>
+          <td><a href={`${base}/plugins/${p.name}/`}><code>{p.name}</code></a></td>
+          <td>{p.skills.length}</td>
+          <td>{p.description}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="callout">More plugins will land here as they are added, each installable as <code>/plugin install &lt;name&gt;@{SITE.marketplace}</code>.</p>
+</Doc>

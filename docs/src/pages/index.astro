@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import CopyBlock from '../components/CopyBlock.astro';
+import { plugins } from '../data/registry';
+import { SITE } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const total = plugins.reduce((n, p) => n + p.skills.length, 0);
+const thiran = plugins.find((p) => p.name === 'thiran');
+const order = ['plan-with-me', 'commit-msg', 'safe-rebase', 'pr-triage', 'pr-judge'];
+const flow = thiran ? order.map((s) => thiran.skills.find((x) => x.slug === s)).filter(Boolean) : [];
+---
+<Base>
+  <main>
+    <section class="hero wrap">
+      <span class="chip chip-accent"><span lang="ta">{SITE.tamil}</span> · {SITE.tagline}</span>
+      <h1 class="display">Skills that make shipping code feel calm.</h1>
+      <p class="sub"><strong>Thiran</strong> is Tamil for <em>skill</em>; a <strong>pattarai</strong> is a workshop. This is a growing workshop of Claude Code skills, grouped into plugins. Start with <code>thiran</code>: plan it, commit it, rebase it safely, and review it with judgement.</p>
+      <div class="cta">
+        <a class="btn btn-solid" href={`${base}/getting-started/`}>Get started</a>
+        <a class="btn btn-outline" href={SITE.github}>View on GitHub</a>
+      </div>
+      <div class="install card">
+        <p class="eyebrow">Install in two commands</p>
+        <CopyBlock lines={[`/plugin marketplace add ${SITE.repo}`, `/plugin install thiran@${SITE.marketplace}`]} />
+      </div>
+    </section>
+
+    {flow.length > 0 && (
+    <section class="wrap section">
+      <p class="eyebrow">The flow</p>
+      <h2>One plugin, the whole pull-request journey.</h2>
+      <ol class="steps">
+        {flow.map((s, i) => (
+          <li><a href={`${base}/plugins/thiran/${s.slug}/`}><span class="n">{i + 1}</span><span class="st">{s.stage}</span><strong>{s.title}</strong><code>{s.command}</code></a></li>
+        ))}
+      </ol>
+    </section>)}
+
+    <section class="wrap section">
+      <p class="eyebrow">The workshop</p>
+      <h2>{plugins.length === 1 ? 'One plugin, more on the way.' : `${plugins.length} plugins, ${total} skills.`}</h2>
+      <div class="grid">
+        {plugins.map((p) => (
+          <a class="card" href={`${base}/plugins/${p.name}/`}>
+            <span class="chip">{p.skills.length} skills · v{p.version}</span>
+            <h3>{p.name}</h3>
+            <p>{p.description}</p>
+            <span class="more">Explore the plugin →</span>
+          </a>
+        ))}
+        <div class="card soon">
+          <span class="chip chip-accent">Growing</span>
+          <h3>Next plugin</h3>
+          <p>Each new plugin joins the same marketplace and installs as <code>name@{SITE.marketplace}</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    {thiran && (
+    <section class="wrap section">
+      <p class="eyebrow">Inside thiran</p>
+      <h2>Five skills for the daily git loop.</h2>
+      <div class="grid">
+        {thiran.skills.map((s) => (
+          <a class="card" href={`${base}/plugins/thiran/${s.slug}/`}>
+            <span class="chip">{s.stage}</span>
+            <h3>{s.title}</h3>
+            <p>{s.tagline}</p>
+            <span class="more">Read more →</span>
+          </a>
+        ))}
+      </div>
+    </section>)}
+  </main>
+</Base>
+
+<style>
+  .hero { padding-top: 96px; padding-bottom: 32px; }
+  .hero h1 { margin: 24px 0 24px; max-width: 14ch; }
+  .sub { font: 330 23px/34.5px var(--sans); color: var(--text-soft); max-width: 660px; margin: 0 0 32px; }
+  .sub strong { font-weight: 600; color: var(--text); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 56px; }
+  .install { max-width: 640px; padding: 24px 28px 28px; }
+  .install .eyebrow { margin: 0 0 12px; }
+  .section { padding-top: 104px; }
+  .section h2 { margin: 12px 0 40px; max-width: 22ch; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .steps a { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 20px; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); text-decoration: none; }
+  .steps a:hover { border-color: var(--accent); }
+  .steps .n { font: 400 28px/1 var(--serif); color: var(--accent); }
+  .steps .st { font: 600 12px/1.2 var(--sans); color: var(--text-mute); }
+  .steps strong { font: 600 17px/1.25 var(--sans); }
+  .steps code { align-self: flex-start; font-size: 12px; word-break: break-all; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .grid .card h3 { margin: 16px 0 8px; font-size: 28px; line-height: 1.2; font-family: var(--serif); }
+  .grid .card p { margin: 0 0 16px; color: var(--text-soft); font-size: 15px; line-height: 22px; }
+  .more { font-weight: 600; font-size: 15px; color: var(--text); }
+  .soon { border-style: dashed; box-shadow: none; background: transparent; }
+  @media (max-width: 980px) { .steps { grid-template-columns: repeat(2, 1fr); } .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .hero { padding-top: 56px; } .steps, .grid { grid-template-columns: 1fr; } .sub { font-size: 19px; line-height: 29px; } .section { padding-top: 72px; } .card { padding: 24px; } }
+</style>

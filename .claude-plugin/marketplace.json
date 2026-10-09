@@ -1,0 +1,29 @@
+{
+  "name": "pattarai",
+  "owner": {
+    "name": "Balagurunathan Marimuthu",
+    "email": "gmbalaa14@gmail.com"
+  },
+  "metadata": {
+    "description": "Thiran Pattarai: a workshop of hand-forged Claude Code skills, grouped into plugins.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "thiran",
+      "source": "./plugins/thiran",
+      "description": "Developer workflow skills: plan features, write conventional commits, rebase safely, and triage and judge PR review comments.",
+      "version": "1.0.0",
+      "category": "development",
+      "license": "MIT",
+      "keywords": [
+        "git",
+        "pull-request",
+        "code-review",
+        "rebase",
+        "conventional-commits",
+        "planning"
+      ]
+    }
+  ]
+}
