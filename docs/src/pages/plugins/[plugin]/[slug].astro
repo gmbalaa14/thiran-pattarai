@@ -1,0 +1,46 @@
+---
+import Doc from '../../../layouts/Doc.astro';
+import { plugins } from '../../../data/registry';
+import { SITE } from '../../../data/site';
+export function getStaticPaths() {
+  return plugins.flatMap((plugin) =>
+    plugin.skills.map((skill) => ({ params: { plugin: plugin.name, slug: skill.slug }, props: { skill } })));
+}
+const { skill: s } = Astro.props;
+const headings = [
+  ...(s.whenToUse.length ? [{ depth: 2, slug: 'when-to-use', text: 'When to use it' }] : []),
+  ...(s.howItWorks.length ? [{ depth: 2, slug: 'how-it-works', text: 'How it works' }] : []),
+  { depth: 2, slug: 'try-it', text: 'Try it' },
+  ...(s.needs.length ? [{ depth: 2, slug: 'requirements', text: 'Requirements' }] : []),
+  ...(s.notes ? [{ depth: 2, slug: 'good-to-know', text: 'Good to know' }] : []),
+  { depth: 2, slug: 'skill-details', text: 'Skill details' },
+];
+---
+<Doc title={s.title} description={s.tagline} headings={headings}>
+  <span class="chip chip-accent">{s.stage}</span>
+  <h1 style="margin-top:16px">{s.title}</h1>
+  <p class="lede">{s.tagline}</p>
+
+  {s.whenToUse.length > 0 && (<><h2 id="when-to-use">When to use it</h2><ul>{s.whenToUse.map((t) => <li>{t}</li>)}</ul></>)}
+  {s.howItWorks.length > 0 && (<><h2 id="how-it-works">How it works</h2><ol>{s.howItWorks.map((t) => <li>{t}</li>)}</ol></>)}
+
+  <h2 id="try-it">Try it</h2>
+  <pre><code>{s.example}</code></pre>
+
+  {s.needs.length > 0 && (<><h2 id="requirements">Requirements</h2><ul>{s.needs.map((t) => <li>{t}</li>)}</ul></>)}
+  {s.notes && (<><h2 id="good-to-know">Good to know</h2><ul>{s.notes.map((t) => <li>{t}</li>)}</ul></>)}
+
+  <h2 id="skill-details">Skill details</h2>
+  <table>
+    <tbody>
+      <tr><th>Command</th><td><code>{s.command}</code></td></tr>
+      <tr><th>Plugin</th><td><code>{s.plugin}</code></td></tr>
+      <tr><th>Version</th><td>{s.fm.version ?? '—'}</td></tr>
+      <tr><th>Author</th><td>{s.fm.author ?? '—'}</td></tr>
+      {s.fm.compatibility && <tr><th>Compatibility</th><td>{s.fm.compatibility}</td></tr>}
+      {s.fm.license && <tr><th>License</th><td>{s.fm.license}</td></tr>}
+      <tr><th>Source</th><td><a href={`${SITE.github}/blob/main/${s.sourcePath}`}>SKILL.md on GitHub</a></td></tr>
+    </tbody>
+  </table>
+  <p class="callout"><strong>Frontmatter description.</strong> {s.fm.description}</p>
+</Doc>

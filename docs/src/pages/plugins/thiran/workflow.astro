@@ -1,0 +1,72 @@
+---
+import Doc from '../../../layouts/Doc.astro';
+import { getPlugin } from '../../../data/registry';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const get = (s) => getPlugin('thiran').skills.find((x) => x.slug === s);
+const headings = [
+  { depth: 2, slug: 'the-path', text: 'The path' },
+  { depth: 2, slug: 'safe-rebase-in-detail', text: 'Safe Rebase in detail' },
+  { depth: 2, slug: 'triage-then-judge', text: 'Triage, then judge' },
+];
+const stages = [
+  { s: 'plan-with-me', out: 'plan, flow diagrams and summary' },
+  { s: 'commit-msg', out: 'commit message, PR title and description' },
+  { s: 'safe-rebase', out: 'branch moved with a way back' },
+  { s: 'pr-triage', out: 'HTML report of every comment' },
+  { s: 'pr-judge', out: 'verdict, fix or rebuttal' },
+];
+---
+<Doc title="The workflow" description="How the thiran skills fit together from idea to merged PR." headings={headings}>
+  <h1>The workflow</h1>
+  <p class="lede">The skills work alone, but they are designed to hand off to each other.</p>
+
+  <h2 id="the-path">The path</h2>
+  <ol class="path">
+    {stages.map(({ s, out }) => (
+      <li>
+        <a href={`${base}/plugins/thiran/${s}/`}>
+          <span class="st">{get(s).stage}</span>
+          <strong>{get(s).title}</strong>
+          <span class="out">{out}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+
+  <h2 id="safe-rebase-in-detail">Safe Rebase in detail</h2>
+  <p>The rebase is rehearsed on a throwaway branch before your real history is touched. Pushing is the only point of no return, and it always needs your confirmation.</p>
+  <div class="rb">
+    <div class="box">Trial rebase<small>disposable branch</small></div>
+    <span class="arr">→</span>
+    <div class="box">Clean?<small>conflicts are listed, you choose</small></div>
+    <span class="arr">→</span>
+    <div class="box">Apply for real<small>tip saved as PRE_REBASE_TIP</small></div>
+    <span class="arr">→</span>
+    <div class="box">Push?<small>--force-with-lease, after you say yes</small></div>
+  </div>
+  <p class="callout"><strong>Backing out.</strong> Mid-rebase, <code>git rebase --abort</code> restores the starting state completely. After a finished but unpushed rebase, the bundled <code>undo</code> command returns to <code>PRE_REBASE_TIP</code>.</p>
+
+  <h2 id="triage-then-judge">Triage, then judge</h2>
+  <p>PR Triage collects the comments and PR Judge decides what to do with each one. They share a comment ID, so a verdict from PR Judge can be written back into the triage report.</p>
+  <ol>
+    <li>Run <code>/thiran:pr-triage</code> to build the HTML report.</li>
+    <li>Use the report’s Copy buttons on a comment. The copied text carries the comment ID and report path.</li>
+    <li>Paste it into <code>/thiran:pr-judge</code>. You get a fix, a rebuttal, or both.</li>
+    <li>Confirm, and the status and verdict are synced back to the report.</li>
+  </ol>
+</Doc>
+
+<style>
+  .path { list-style: none; padding: 0 !important; margin: 0 0 24px; display: grid; gap: 12px; counter-reset: p; }
+  .path li { margin: 0; padding: 0; }
+  .path a { display: grid; grid-template-columns: 72px 1fr; grid-template-rows: auto auto; column-gap: 16px; padding: 16px 20px; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); text-decoration: none !important; }
+  .path a:hover { border-color: var(--accent); }
+  .path .st { grid-row: 1 / 3; align-self: center; font: 400 22px/1 var(--serif); color: var(--accent); }
+  .path strong { color: var(--text); }
+  .path .out { color: var(--text-mute); font-size: 15px; }
+  .rb { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin: 24px 0; }
+  .rb .box { flex: 1 1 150px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface); color: var(--text); font-weight: 600; font-size: 15px; line-height: 20px; }
+  .rb small { display: block; font-weight: 400; color: var(--text-mute); font-size: 13px; line-height: 18px; margin-top: 4px; }
+  .rb .arr { align-self: center; color: var(--accent); }
+  @media (max-width: 640px) { .rb .arr { display: none; } }
+</style>

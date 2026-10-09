@@ -1,0 +1,43 @@
+---
+import Base from './Base.astro';
+import { nav } from '../data/nav';
+const { frontmatter = {}, headings = [], title: t, description: d, wide } = Astro.props;
+const title = frontmatter.title ?? t;
+const description = frontmatter.description ?? d;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cur = Astro.url.pathname.replace(base, '') || '/';
+const flat = nav.flatMap((g) => g.items);
+const i = flat.findIndex((x) => x.href === cur);
+const prev = i > 0 ? flat[i - 1] : null;
+const next = i >= 0 && i < flat.length - 1 ? flat[i + 1] : null;
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+<Base title={title} description={description}>
+  <div class="wrap docs">
+    <aside class="sidebar" aria-label="Documentation">
+      {nav.map((g) => (
+        <>
+          <h4>{g.label}</h4>
+          <ul>{g.items.map((it) => (
+            <li><a href={`${base}${it.href}`} aria-current={it.href === cur ? 'page' : undefined}>{it.label}</a></li>
+          ))}</ul>
+        </>
+      ))}
+    </aside>
+    <main class="prose">
+      <slot />
+      {(prev || next) && (
+        <nav class="pager" aria-label="Pagination">
+          {prev ? <a href={`${base}${prev.href}`}><small>Previous</small>{prev.label}</a> : <span style="flex:1"></span>}
+          {next ? <a class="next" href={`${base}${next.href}`}><small>Next</small>{next.label}</a> : <span style="flex:1"></span>}
+        </nav>
+      )}
+    </main>
+    <aside class="toc" aria-label="On this page">
+      {toc.length > 0 && (<>
+        <h4>On this page</h4>
+        <ul>{toc.map((h) => <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>)}</ul>
+      </>)}
+    </aside>
+  </div>
+</Base>

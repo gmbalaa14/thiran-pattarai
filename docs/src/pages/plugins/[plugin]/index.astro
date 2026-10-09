@@ -1,0 +1,38 @@
+---
+import Doc from '../../../layouts/Doc.astro';
+import CopyBlock from '../../../components/CopyBlock.astro';
+import { plugins } from '../../../data/registry';
+import { SITE } from '../../../data/site';
+export function getStaticPaths() {
+  return plugins.map((plugin) => ({ params: { plugin: plugin.name }, props: { plugin } }));
+}
+const { plugin } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const headings = [
+  { depth: 2, slug: 'install', text: 'Install' },
+  { depth: 2, slug: 'skills', text: 'Skills' },
+];
+---
+<Doc title={plugin.name} description={plugin.description} headings={headings}>
+  <span class="chip chip-accent">Plugin · v{plugin.version}</span>
+  <h1 style="margin-top:16px"><code style="font-size:.8em">{plugin.name}</code></h1>
+  <p class="lede">{plugin.description}</p>
+
+  <h2 id="install">Install</h2>
+  <CopyBlock lines={[`/plugin marketplace add ${SITE.repo}`, `/plugin install ${plugin.name}@${SITE.marketplace}`]} />
+
+  <h2 id="skills">Skills</h2>
+  <table>
+    <thead><tr><th>Command</th><th>Stage</th><th>What it does</th></tr></thead>
+    <tbody>
+      {plugin.skills.map((s) => (
+        <tr>
+          <td><a href={`${base}/plugins/${plugin.name}/${s.slug}/`}><code>{s.command}</code></a></td>
+          <td>{s.stage}</td>
+          <td>{s.tagline}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  {plugin.name === 'thiran' && <p>See how they fit together in <a href={`${base}/plugins/thiran/workflow/`}>the workflow</a>.</p>}
+</Doc>

@@ -1,0 +1,20 @@
+{
+  "name": "thiran",
+  "description": "Developer workflow skills: plan features, write conventional commits, rebase safely, and triage and judge PR review comments.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Balagurunathan Marimuthu",
+    "email": "gmbalaa14@gmail.com"
+  },
+  "homepage": "https://gmbalaa14.github.io/thiran-pattarai",
+  "repository": "https://github.com/gmbalaa14/thiran-pattarai",
+  "keywords": [
+    "git",
+    "pull-request",
+    "code-review",
+    "rebase",
+    "conventional-commits",
+    "planning"
+  ]
+}
