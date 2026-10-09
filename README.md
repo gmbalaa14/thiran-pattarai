@@ -70,3 +70,5 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for how to ad
 ## License
 
 [MIT](LICENSE) © 2026 Balagurunathan Marimuthu
+
+Code is MIT. The Thiran Pattarai name and logo are not licensed for reuse as a brand.

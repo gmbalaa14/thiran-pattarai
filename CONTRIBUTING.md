@@ -14,6 +14,7 @@ Thank you for contributing! This guide covers how to add a skill, add a plugin, 
 - [Submitting a PR](#submitting-a-pr)
 - [PR checklist](#pr-checklist)
 - [Reporting issues](#reporting-issues)
+- [License](#license)
 - [Code of Conduct](#code-of-conduct)
 
 ---
@@ -147,6 +148,12 @@ Use the [issue templates](https://github.com/gmbalaa14/thiran-pattarai/issues/ne
 - **Documentation issue:** something on the site or in a README is unclear, wrong or missing.
 
 Blank issues are turned off so every report has the details needed to act on it. Report Code of Conduct concerns privately, as described in [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md#enforcement).
+
+---
+
+## License
+
+By contributing, you agree your contribution is licensed under MIT.
 
 ---
 

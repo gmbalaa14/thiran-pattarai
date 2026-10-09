@@ -119,3 +119,7 @@ Use the [issue templates](https://github.com/gmbalaa14/thiran-pattarai/issues/ne
 - **Documentation issue:** something on the site or in a README is unclear, wrong or missing.
 
 Blank issues are turned off so every report has the details needed to act on it. Report Code of Conduct concerns privately, as described in the [Code of Conduct](/code-of-conduct/#enforcement).
+
+## License
+
+By contributing, you agree your contribution is licensed under MIT.
