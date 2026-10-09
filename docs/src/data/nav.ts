@@ -21,5 +21,11 @@ export const nav = [
       ...p.skills.map((s) => ({ label: s.title, href: `/plugins/${p.name}/${s.slug}/` })),
     ],
   })),
-  { label: 'Project', items: [{ label: 'Contributing', href: '/contributing/' }] },
+  {
+    label: 'Project',
+    items: [
+      { label: 'Contributing', href: '/contributing/' },
+      { label: 'Code of Conduct', href: '/code-of-conduct/' },
+    ],
+  },
 ];
