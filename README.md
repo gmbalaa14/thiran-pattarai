@@ -5,6 +5,11 @@
 
 *Thiran* is Tamil for **skill**; a *pattarai* is a **workshop**. This repository is a Claude Code plugin marketplace, a growing workshop of hand-forged skills, grouped into plugins.
 
+[![Validate](https://github.com/gmbalaa14/thiran-pattarai/actions/workflows/validate.yml/badge.svg)](https://github.com/gmbalaa14/thiran-pattarai/actions/workflows/validate.yml)
+[![Docs](https://github.com/gmbalaa14/thiran-pattarai/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/gmbalaa14/thiran-pattarai/actions/workflows/deploy-docs.yml)
+[![License: MIT](https://img.shields.io/github/license/gmbalaa14/thiran-pattarai)](LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 **Docs:** https://gmbalaa14.github.io/thiran-pattarai
 
 ## Install
