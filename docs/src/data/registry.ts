@@ -19,6 +19,7 @@ export interface Skill {
   example: string;
   needs: string[];
   notes?: string[];
+  rules?: { rule: string; detail: string }[];
   documented: boolean;
   fm: { description: string; version?: string; author?: string; compatibility?: string; license?: string };
   sourcePath: string;
@@ -43,6 +44,9 @@ function readSkill(plugin: string, dir: string): Skill {
   if (fm.name !== dir) throw new Error(`${file}: name "${fm.name}" must equal folder "${dir}"`);
   const doc: SkillDoc | undefined = skillDocs.find((d) => d.plugin === plugin && d.slug === dir);
   const description = String(fm.description ?? '').replace(/^Usage:[^.]*\.\s*/, '');
+  // Optional rules table: one copy in the skill folder, rendered on the skill page.
+  const rulesFile = path.join(ROOT, 'plugins', plugin, 'skills', dir, 'rules.json');
+  const rules = fs.existsSync(rulesFile) ? readJson(rulesFile) : undefined;
   return {
     plugin,
     slug: dir,
@@ -55,6 +59,7 @@ function readSkill(plugin: string, dir: string): Skill {
     example: doc?.example ?? `/${plugin}:${dir}`,
     needs: doc?.needs ?? (fm.compatibility ? [String(fm.compatibility)] : []),
     notes: doc?.notes,
+    rules,
     documented: !!doc,
     fm: {
       description: String(fm.description ?? ''),
