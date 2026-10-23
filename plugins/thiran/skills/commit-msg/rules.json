@@ -1,0 +1,50 @@
+[
+  {
+    "rule": "Subject",
+    "detail": "`type(scope): lowercase imperative description`, no trailing period, 72 characters at most."
+  },
+  {
+    "rule": "Scope",
+    "detail": "The most affected module. Several scopes are comma-separated with no space, capped at 3, as in `fix(encryption,utils)`."
+  },
+  {
+    "rule": "Primary types",
+    "detail": "`feat`, `fix`, `refactor`, `perf`, `build`, `ci`, `chore` and `style` each decide a commit."
+  },
+  {
+    "rule": "Split",
+    "detail": "Different primary types get a proposed split with a file list per commit. The same type across several folders gives one message with combined scopes."
+  },
+  {
+    "rule": "Ride-along files",
+    "detail": "`docs`, `test`, and lockfiles, generated files and snapshots join another type. The body gets one `Also ...` line."
+  },
+  {
+    "rule": "Docs or tests only",
+    "detail": "The type with more changed files wins. `test` wins a tie, and an override line shows how to switch."
+  },
+  {
+    "rule": "Breaking changes",
+    "detail": "A `!` after the type plus a `BREAKING CHANGE:` footer that says how to adapt."
+  },
+  {
+    "rule": "Untracked files",
+    "detail": "Always excluded. Run `git add` on one and pick Retry to include it."
+  },
+  {
+    "rule": "Scope question",
+    "detail": "Asked only when staged and modified files both exist or nothing is staged. Options are staged only, staged plus modified, and Retry."
+  },
+  {
+    "rule": "PR base branch",
+    "detail": "The nearest ancestor branch, meaning the candidate with the fewest commits ahead of HEAD. Confirmed with you when two candidates are close."
+  },
+  {
+    "rule": "Writing style",
+    "detail": "The humanizer rules apply: no em dashes, no buzzwords, no summary sentences, nothing invented."
+  },
+  {
+    "rule": "Output",
+    "detail": "Text only. The skill never runs `git commit`, `git push` or opens a PR unless you ask."
+  }
+]
