@@ -1,7 +1,7 @@
 {
   "name": "thiran",
   "description": "Developer workflow skills: plan features, write conventional commits, rebase safely, and triage and judge PR review comments.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "author": {
     "name": "Balagurunathan Marimuthu",
