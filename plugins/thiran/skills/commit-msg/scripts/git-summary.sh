@@ -12,14 +12,56 @@ branch="$(git branch --show-current)"
 [ -z "$branch" ] && branch="(detached HEAD)"
 
 if [ "$mode" = "commit" ]; then
-  staged="$(git diff --cached --name-status)"
-  unstaged="$(git diff --name-status)"
-  untracked="$(git ls-files --others --exclude-standard)"
+  # Usage: git-summary.sh commit [staged|staged+modified|modified]
+  # The optional scope picks which file set gets classified (default: staged).
+  scope="${2:-staged}"
+  g() { git -c core.quotepath=off "$@"; }
+  staged="$(g diff --cached --name-status)"
+  unstaged="$(g diff --name-status)"
+  untracked="$(g ls-files --others --exclude-standard)"
+  staged_names="$(g diff --cached --name-only | sort -u)"
+  unstaged_names="$(g diff --name-only | sort -u)"
+  partly="$(comm -12 <(printf '%s\n' "$staged_names") <(printf '%s\n' "$unstaged_names") | sed '/^$/d')"
   count() { [ -z "$1" ] && echo 0 || printf '%s\n' "$1" | wc -l | tr -d ' '; }
+
+  # Classify a path as companion (generated/lock/snapshot), tests, docs or code.
+  # Companions are produced by a change rather than authored, so they never
+  # count toward totals or trigger a split. Markdown under skills/ is the
+  # product of this kind of repo, so it counts as code, not docs.
+  classify() {
+    case "$1" in
+      package-lock.json|*/package-lock.json|yarn.lock|*/yarn.lock|pnpm-lock.yaml|*/pnpm-lock.yaml|*.lock|go.sum|*/go.sum|packages.lock.json|*/packages.lock.json|*.g.cs|*.Designer.cs|*ModelSnapshot.cs|*.generated.*|*.snap|*__snapshots__/*) echo companion; return;;
+      tests/*|*/tests/*|test/*|*/test/*|__tests__/*|*/__tests__/*|*Tests.cs|*Test.cs|*.spec.*|*.test.*|*_test.go|test_*.py|*/test_*.py) echo tests; return;;
+      skills/*.md|*/skills/*.md) echo code; return;;
+      *.md|*.rst|docs/*|*/docs/*|README*|*/README*|CHANGELOG*|*/CHANGELOG*|LICENSE*|*/LICENSE*) echo docs; return;;
+      *) echo code;;
+    esac
+  }
+
+  case "$scope" in
+    staged)           scope_names="$staged_names" ;;
+    modified)         scope_names="$unstaged_names" ;;
+    staged+modified)  scope_names="$(printf '%s\n%s\n' "$staged_names" "$unstaged_names" | sort -u | sed '/^$/d')" ;;
+    *) echo "ERROR: unknown scope '$scope'"; exit 1 ;;
+  esac
+
+  n_code=0; n_docs=0; n_tests=0; n_comp=0; listing=""
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    c="$(classify "$f")"
+    case "$c" in code) n_code=$((n_code+1));; docs) n_docs=$((n_docs+1));; tests) n_tests=$((n_tests+1));; companion) n_comp=$((n_comp+1));; esac
+    listing="$listing\n  [$c] $f"
+  done <<< "$scope_names"
+
   echo "branch: $branch"
   echo "staged files: $(count "$staged")"
   echo "unstaged (modified, uncommitted) files: $(count "$unstaged")"
-  echo "untracked files: $(count "$untracked")"
+  echo "untracked files: $(count "$untracked") (excluded from every scope)"
+  echo "partly staged files: $(count "$partly")"
+  [ -n "$partly" ] && printf '%s\n' "$partly" | sed 's/^/  /'
+  echo "--- scope: $scope ---"
+  echo "code: $n_code, docs: $n_docs, tests: $n_tests, companions: $n_comp"
+  printf '%b\n' "$listing" | sed '/^$/d'
   echo "--- staged ---";    [ -n "$staged" ]    && printf '%s\n' "$staged"
   echo "--- unstaged ---";  [ -n "$unstaged" ]  && printf '%s\n' "$unstaged"
   echo "--- untracked ---"; [ -n "$untracked" ] && printf '%s\n' "$untracked"
