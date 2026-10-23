@@ -54,6 +54,12 @@ for entry in (mp or {}).get("plugins", []):
             errors.append(f"{f.relative_to(root)}: missing description")
         if ".claude/skills/" in text:
             errors.append(f"{f.relative_to(root)}: hard-coded ~/.claude/skills path; use ${{CLAUDE_SKILL_DIR}}")
+    for rf in sorted((src / "skills").glob("*/rules.json")):
+        data = load(rf)
+        ok = isinstance(data, list) and data and all(
+            isinstance(r, dict) and str(r.get("rule", "")).strip() and str(r.get("detail", "")).strip() for r in data)
+        if data is not None and not ok:
+            errors.append(f"{rf.relative_to(root)}: must be a non-empty list of {{rule, detail}} with text in both")
     print(f"{entry['name']}: {len(skills)} skills checked")
 
 if errors:

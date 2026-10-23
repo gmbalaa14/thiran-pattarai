@@ -28,7 +28,7 @@
 | Command | What it does |
 | --- | --- |
 | `/thiran:plan-with-me` | Turns a feature idea into a plan, flow diagrams and a summary |
-| `/thiran:commit-msg` | Conventional commit messages and PR descriptions from staged changes |
+| `/thiran:commit-msg` | Conventional commit messages and PR descriptions from staged or modified changes |
 | `/thiran:safe-rebase` | Rehearses a rebase on a throwaway branch before touching real history |
 | `/thiran:pr-triage` | Builds an HTML report of CodeRabbit and reviewer comments from an Azure DevOps PR |
 | `/thiran:pr-judge` | Judges a review comment and returns a fix, a rebuttal, or both |

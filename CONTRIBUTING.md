@@ -134,7 +134,7 @@ The pull request template covers four groups of checks:
 
 - **Skills:** folder name matches `name` in `SKILL.md`, frontmatter is present, LF line endings, and no hard-coded `~/.claude/skills` paths.
 - **Plugins and versioning:** new plugins are in `marketplace.json` with matching name and version, and changed plugins have their version bumped in both manifests.
-- **Documentation:** new hand-written pages are in `nav.ts`, and the repo and docs-site copies of `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` change together.
+- **Documentation:** new hand-written pages are in `nav.ts`, the repo and docs-site copies of `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` change together, and a skill that changes a rule updates its `rules.json` (if it has one) in the same PR.
 - **Testing:** `python3 scripts/validate.py` and the docs build pass, and the skill has been tried in Claude Code.
 
 ---
