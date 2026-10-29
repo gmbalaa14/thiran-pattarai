@@ -1,0 +1,27 @@
+name: Notify Docs
+
+# The documentation site lives in gmbalaa14/thiran-pattarai-docs and is generated from
+# the manifests and SKILL.md files in this repo. Ask it to rebuild when they change.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plugins/**'
+      - '.claude-plugin/**'
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger docs rebuild
+        env:
+          GH_TOKEN: ${{ secrets.DOCS_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::Secret DOCS_DISPATCH_TOKEN is not set (fine-grained PAT with Contents: read and write on thiran-pattarai-docs)."
+            exit 1
+          fi
+          gh api repos/gmbalaa14/thiran-pattarai-docs/dispatches -f event_type=marketplace-updated

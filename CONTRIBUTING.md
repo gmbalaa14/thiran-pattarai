@@ -1,6 +1,6 @@
 # Contributing to Thiran Pattarai
 
-Thank you for contributing! This guide covers how to add a skill, add a plugin, and get a change merged. The same guide is published on the [documentation site](https://gmbalaa14.github.io/thiran-pattarai/contributing/).
+Thank you for contributing! This guide covers how to add a skill, add a plugin, and get a change merged. The same guide is published on the [documentation site](https://gmbalaa14.github.io/thiran-pattarai-docs/contributing/).
 
 ## Table of Contents
 
@@ -26,12 +26,11 @@ Thank you for contributing! This guide covers how to add a skill, add a plugin, 
 plugins/<plugin>/                 one folder per plugin
   .claude-plugin/plugin.json
   skills/<skill>/SKILL.md
-docs/                             Astro documentation site
 scripts/validate.py               manifest and skill checks used in CI
 brand/                            logos, favicon and banners
 ```
 
-The docs site discovers plugins and skills from the manifests and `SKILL.md` files, so adding either needs no navigation edits.
+The documentation site lives in a separate repository, [thiran-pattarai-docs](https://github.com/gmbalaa14/thiran-pattarai-docs). It discovers plugins and skills from the manifests and `SKILL.md` files, so adding either needs no navigation edits.
 
 ---
 
@@ -54,7 +53,7 @@ The docs site discovers plugins and skills from the manifests and `SKILL.md` fil
 4. Save files with LF line endings. CI rejects CRLF in `SKILL.md`.
 5. Open a pull request.
 
-That is enough for the skill to appear on the site, with its name, description, version and requirements read straight from `SKILL.md`. For a richer page (when to use it, how it works, an example), add an entry in `docs/src/data/skill-docs.ts`.
+That is enough for the skill to appear on the site, with its name, description, version and requirements read straight from `SKILL.md`. For a richer page (when to use it, how it works, an example), open a pull request in the [docs repository](https://github.com/gmbalaa14/thiran-pattarai-docs) adding an entry in `src/data/skill-docs.ts`.
 
 ---
 
@@ -82,22 +81,12 @@ To call a script in a sibling skill of the same plugin, use `${CLAUDE_SKILL_DIR}
 
 ## Documentation site
 
-The site lives in `docs/`, is built with [Astro](https://astro.build/), and deploys to GitHub Pages from `main`.
+The site lives in its own repository, [thiran-pattarai-docs](https://github.com/gmbalaa14/thiran-pattarai-docs), so installing the marketplace does not download it. It is built with [Astro](https://astro.build/) and deploys to GitHub Pages.
 
-- Skill and plugin pages are generated from the manifests and `SKILL.md` files.
-- Hand-written pages live in `docs/src/pages/` (for example `contributing.md` and `code-of-conduct.md`).
-- Sidebar entries are defined in `docs/src/data/nav.ts`. A new hand-written page needs an entry there.
-- Root-relative links inside Markdown (such as `/contributing/`) are prefixed with the site base path automatically.
+- Skill and plugin pages are generated from the manifests and `SKILL.md` files in the marketplace repository. A merge to `main` there rebuilds the site automatically.
+- Hand-written pages, sidebar entries (`src/data/nav.ts`) and richer skill pages (`src/data/skill-docs.ts`) are changed with a pull request in the docs repository.
 
-If you change `CONTRIBUTING.md` or `CODE_OF_CONDUCT.md`, update the matching page under `docs/src/pages/` in the same pull request so the site and the repository stay in step.
-
-To run the site locally:
-
-```bash
-cd docs
-npm install
-npm run dev
-```
+If you change `CONTRIBUTING.md` or `CODE_OF_CONDUCT.md` in the marketplace repository, open a matching pull request in the docs repository (`src/pages/contributing.md` and `src/pages/code-of-conduct.md`). To run the site locally, follow the docs repository README.
 
 ---
 
@@ -105,10 +94,9 @@ npm run dev
 
 ```bash
 python3 scripts/validate.py          # manifests and skills
-cd docs && npm ci && npm run build   # docs site builds without errors
 ```
 
-CI runs both on every pull request.
+CI runs this on every pull request.
 
 ---
 
@@ -134,8 +122,8 @@ The pull request template covers four groups of checks:
 
 - **Skills:** folder name matches `name` in `SKILL.md`, frontmatter is present, LF line endings, and no hard-coded `~/.claude/skills` paths.
 - **Plugins and versioning:** new plugins are in `marketplace.json` with matching name and version, and changed plugins have their version bumped in both manifests.
-- **Documentation:** new hand-written pages are in `nav.ts`, the repo and docs-site copies of `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` change together, and a skill that changes a rule updates its `rules.json` (if it has one) in the same PR.
-- **Testing:** `python3 scripts/validate.py` and the docs build pass, and the skill has been tried in Claude Code.
+- **Documentation:** a skill that changes a rule updates its `rules.json` (if it has one) in the same PR, and a change to `CONTRIBUTING.md` or `CODE_OF_CONDUCT.md` has a matching pull request in the docs repository.
+- **Testing:** `python3 scripts/validate.py` passes, and the skill has been tried in Claude Code.
 
 ---
 

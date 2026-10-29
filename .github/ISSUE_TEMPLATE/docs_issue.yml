@@ -8,7 +8,7 @@ body:
     attributes:
       label: Page or file
       description: A link to the docs page, or the path of the file in the repository.
-      placeholder: https://gmbalaa14.github.io/thiran-pattarai/getting-started/
+      placeholder: https://gmbalaa14.github.io/thiran-pattarai-docs/getting-started/
     validations:
       required: true
   - type: dropdown
