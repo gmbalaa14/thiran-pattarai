@@ -2,7 +2,7 @@
 
 Writes a Conventional Commits message from your staged or modified changes, or a pull request title and description from the commits on your branch. It reads the real diff, applies a few clear rules, and gives you text to copy. It never runs `git commit` for you.
 
-Part of the `thiran` plugin. Docs: <https://gmbalaa14.github.io/thiran-pattarai/plugins/thiran/commit-msg/>
+Part of the `thiran` plugin. Docs: <https://gmbalaa14.github.io/thiran-pattarai-docs/plugins/thiran/commit-msg/>
 
 ## Quick start
 
@@ -66,7 +66,7 @@ flowchart TD
 - Docs, tests and generated files ride along with another type and never trigger a split. Different primary types do.
 - Breaking changes get a `!` and a `BREAKING CHANGE:` footer.
 
-The full table is on the docs site: <https://gmbalaa14.github.io/thiran-pattarai/plugins/thiran/commit-msg/#rules-at-a-glance>. It is built from [`rules.json`](rules.json), so there is one copy to keep up to date.
+The full table is on the docs site: <https://gmbalaa14.github.io/thiran-pattarai-docs/plugins/thiran/commit-msg/#rules-at-a-glance>. It is built from [`rules.json`](rules.json), so there is one copy to keep up to date.
 
 ## Requirements
 

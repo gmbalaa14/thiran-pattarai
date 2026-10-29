@@ -26,13 +26,10 @@
 - [ ] Changed plugin: `version` bumped in both `plugin.json` and `marketplace.json`
 
 ### Documentation
-- [ ] Optional richer skill page added in `docs/src/data/skill-docs.ts` (if the skill needs one)
-- [ ] New hand-written docs page has an entry in `docs/src/data/nav.ts`
-- [ ] `CONTRIBUTING.md` and `docs/src/pages/contributing.md` updated together (if either changed)
-- [ ] `CODE_OF_CONDUCT.md` and `docs/src/pages/code-of-conduct.md` updated together (if either changed)
+- [ ] Optional richer skill page: pull request opened in the docs repository for `src/data/skill-docs.ts` (if the skill needs one)
+- [ ] `CONTRIBUTING.md` / `CODE_OF_CONDUCT.md` changed: matching pull request opened in the docs repository (if either changed)
 - [ ] Root `README.md` plugin table updated (if commands were added or renamed)
 
 ### Testing
 - [ ] `python3 scripts/validate.py` passes
-- [ ] `cd docs && npm run build` completes without errors
 - [ ] Skill tried in Claude Code (`/plugin install <plugin>@pattarai`, then run `/<plugin>:<skill>`)

@@ -6,11 +6,11 @@
 *Thiran* is Tamil for **skill**; a *pattarai* is a **workshop**. This repository is a Claude Code plugin marketplace, a growing workshop of hand-forged skills, grouped into plugins.
 
 [![Validate](https://github.com/gmbalaa14/thiran-pattarai/actions/workflows/validate.yml/badge.svg)](https://github.com/gmbalaa14/thiran-pattarai/actions/workflows/validate.yml)
-[![Docs](https://github.com/gmbalaa14/thiran-pattarai/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/gmbalaa14/thiran-pattarai/actions/workflows/deploy-docs.yml)
+[![Docs](https://github.com/gmbalaa14/thiran-pattarai-docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/gmbalaa14/thiran-pattarai-docs/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/github/license/gmbalaa14/thiran-pattarai)](LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-**Docs:** https://gmbalaa14.github.io/thiran-pattarai
+**Docs:** https://gmbalaa14.github.io/thiran-pattarai-docs
 
 ## Install
 
@@ -42,7 +42,6 @@ More plugins (for example `thiran-devops`) will join the same marketplace and in
 plugins/<plugin>/                 one folder per plugin
   .claude-plugin/plugin.json
   skills/<skill>/SKILL.md
-docs/                             Astro documentation site (light and dark)
 scripts/validate.py               manifest and skill checks used in CI
 brand/                            logos (light/dark), favicon, README banners, GitHub avatar and social preview
   options/                        design archive: alternative logo concepts
@@ -50,22 +49,21 @@ CONTRIBUTING.md                   how to add a skill or plugin and open a PR
 CODE_OF_CONDUCT.md                Contributor Covenant 2.1
 ```
 
-The docs site discovers plugins and skills from the manifests and `SKILL.md` files, so adding either needs no navigation edits. See [Contributing](https://gmbalaa14.github.io/thiran-pattarai/contributing/).
+The documentation site lives in its own repository, [thiran-pattarai-docs](https://github.com/gmbalaa14/thiran-pattarai-docs), so adding this marketplace does not download it. It discovers plugins and skills from the manifests and `SKILL.md` files here, so adding either needs no navigation edits. See [Contributing](https://gmbalaa14.github.io/thiran-pattarai-docs/contributing/).
 
 ## Develop
 
 ```bash
 python3 scripts/validate.py       # check manifests and skills
-cd docs && npm install && npm run dev
 ```
 
-Enable GitHub Pages with **Settings → Pages → Source: GitHub Actions**.
+To work on the documentation site, see the [docs repository](https://github.com/gmbalaa14/thiran-pattarai-docs).
 
 Set the repository image under **Settings → General → Social preview** by uploading `brand/social-preview.png`. For the organisation or account avatar, use `brand/avatar.png`.
 
 ## Contributing
 
-Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for how to add a skill or a plugin and what a pull request needs. Everyone taking part is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md). Both are also on the [docs site](https://gmbalaa14.github.io/thiran-pattarai/contributing/).
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for how to add a skill or a plugin and what a pull request needs. Everyone taking part is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md). Both are also on the [docs site](https://gmbalaa14.github.io/thiran-pattarai-docs/contributing/).
 
 ## License
 
